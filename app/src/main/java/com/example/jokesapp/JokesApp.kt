@@ -1,8 +1,8 @@
 package com.example.jokesapp
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
 
-
-class JokesApp: Application() {
-}
+@HiltAndroidApp
+class JokesApp: Application()
