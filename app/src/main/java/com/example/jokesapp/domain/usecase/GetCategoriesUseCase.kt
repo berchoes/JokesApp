@@ -17,5 +17,4 @@ class GetCategoriesUseCase @Inject constructor(private val repository: JokesRepo
             emit(BaseResult.Error<List<String>>(e.localizedMessage ?: "An unexpected error occurred."))
         }
     }
-
 }

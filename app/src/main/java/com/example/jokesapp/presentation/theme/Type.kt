@@ -1,4 +1,4 @@
-package com.example.jokesapp.ui.theme
+package com.example.jokesapp.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.jokesapp.ui.theme
+package com.example.jokesapp.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
