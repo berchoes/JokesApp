@@ -9,5 +9,5 @@ interface JokesRepository {
 
     suspend fun searchJokes(query: String): SearchResultDto
 
-    suspend fun getRandomJoke(category: String): JokeDto
+    suspend fun getRandomJoke(category: String?): JokeDto
 }

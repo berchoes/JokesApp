@@ -12,5 +12,5 @@ class JokesRepositoryImpl @Inject constructor(private val api: JokesApi): JokesR
 
     override suspend fun searchJokes(query: String): SearchResultDto = api.searchJokes(query)
 
-    override suspend fun getRandomJoke(category: String): JokeDto = api.getRandomJoke(category)
+    override suspend fun getRandomJoke(category: String?): JokeDto = api.getRandomJoke(category)
 }

@@ -1,4 +1,4 @@
-package com.example.jokesapp.presentation.theme
+package com.example.jokesapp.util.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

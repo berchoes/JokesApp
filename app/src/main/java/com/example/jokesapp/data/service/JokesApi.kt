@@ -11,7 +11,7 @@ interface JokesApi {
     suspend fun getJokeCategories(): List<String>
 
     @GET("random")
-    suspend fun getRandomJoke(@Query("category") category: String): JokeDto
+    suspend fun getRandomJoke(@Query("category") category: String?): JokeDto
 
     @GET("search")
     suspend fun searchJokes(@Query("query") query: String): SearchResultDto

@@ -1,6 +1,6 @@
 package com.example.jokesapp.domain.usecase
 
-import com.example.jokesapp.common.BaseResult
+import com.example.jokesapp.common.Resource
 import com.example.jokesapp.data.dto.toJoke
 import com.example.jokesapp.domain.model.Joke
 import com.example.jokesapp.domain.repository.JokesRepository
@@ -11,13 +11,13 @@ import javax.inject.Inject
 
 class GetRandomJokeUseCase @Inject constructor(private val repository: JokesRepository) {
 
-    operator fun invoke(category: String): Flow<BaseResult<Joke>> = flow {
+    operator fun invoke(category: String? = null): Flow<Resource<Joke>> = flow {
         try {
-            emit(BaseResult.Loading<Joke>())
+            emit(Resource.Loading)
             val joke: Joke = repository.getRandomJoke(category).toJoke()
-            emit(BaseResult.Success<Joke>(joke))
+            emit(Resource.Success<Joke>(joke))
         }catch (e: Exception){
-            emit(BaseResult.Error<Joke>(e.localizedMessage ?: "An error occurred."))
+            emit(Resource.Error(e.localizedMessage ?: "An error occurred."))
         }
     }
 }
