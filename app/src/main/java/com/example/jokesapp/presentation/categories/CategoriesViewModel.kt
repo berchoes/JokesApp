@@ -5,12 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jokesapp.common.Resource
-import com.example.jokesapp.domain.model.Joke
 import com.example.jokesapp.domain.usecase.GetCategoriesUseCase
 import com.example.jokesapp.domain.usecase.GetRandomJokeUseCase
+import com.example.jokesapp.presentation.common.DialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -25,39 +23,52 @@ class CategoriesViewModel @Inject constructor(
     private val getRandomJokeUseCase: GetRandomJokeUseCase
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(CategoriesState())
-    val state: State<CategoriesState> = _state
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
 
-    private val _randomJoke = MutableSharedFlow<Joke>()
-    val randomJoke = _randomJoke.asSharedFlow()
+    private val _error = mutableStateOf("")
+    val error: State<String> = _error
+
+    private val _categories = mutableStateOf<List<String>>(emptyList())
+    val categories: State<List<String>> = _categories
+
+    private val _dialogState = mutableStateOf(DialogState())
+    val dialogState: State<DialogState> = _dialogState
+
 
     init {
         getCategories()
     }
 
 
-    private fun getCategories() = getCategoriesUseCase.invoke().onEach {
-        when (it) {
-            is Resource.Error -> {
-                _state.value = CategoriesState(error = it.message)
+    private fun getCategories() {
+        _isLoading.value = true
+        getCategoriesUseCase.invoke().onEach {
+            when (it) {
+                is Resource.Error -> {
+                    _error.value = it.message
+                }
+                is Resource.Success -> {
+                    _categories.value = it.data
+                }
             }
-            Resource.Loading -> {
-                _state.value = CategoriesState(isLoading = true)
-            }
-            is Resource.Success -> {
-                _state.value = CategoriesState(categories = it.data)
-            }
-        }
-    }.launchIn(viewModelScope)
+            _isLoading.value = false
+        }.launchIn(viewModelScope)
+    }
 
 
-    private fun getRandomJoke(category: String) = getRandomJokeUseCase.invoke(category).onEach {
-        when (it) {
-            is Resource.Error -> TODO()
-            Resource.Loading -> TODO()
-            is Resource.Success -> {
-                _randomJoke.emit(it.data)
+    fun getRandomJoke(category: String) {
+        _isLoading.value = true
+        getRandomJokeUseCase.invoke(category).onEach {
+            when (it) {
+                is Resource.Error -> _dialogState.value = DialogState(errorMessage = it.message, isShowing = true)
+                is Resource.Success -> _dialogState.value = DialogState(joke = it.data.content, isShowing = true)
             }
-        }
+            _isLoading.value = false
+        }.launchIn(viewModelScope)
+    }
+
+    fun dismissDialog(){
+        _dialogState.value = DialogState(isShowing = false)
     }
 }

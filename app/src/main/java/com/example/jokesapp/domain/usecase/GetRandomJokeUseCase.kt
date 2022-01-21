@@ -13,7 +13,6 @@ class GetRandomJokeUseCase @Inject constructor(private val repository: JokesRepo
 
     operator fun invoke(category: String? = null): Flow<Resource<Joke>> = flow {
         try {
-            emit(Resource.Loading)
             val joke: Joke = repository.getRandomJoke(category).toJoke()
             emit(Resource.Success<Joke>(joke))
         }catch (e: Exception){

@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.jokesapp.presentation.categories.components.CategoryListItem
+import com.example.jokesapp.presentation.common.CustomDialog
 
 /**
  * Created by berchoes on 20.01.2022.
@@ -25,23 +27,26 @@ import com.example.jokesapp.presentation.categories.components.CategoryListItem
 fun CategoriesScreen(
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val categories = viewModel.categories.value
+    val isLoading = viewModel.isLoading.value
+    val error = viewModel.error.value
+    val dialogState = viewModel.dialogState.value
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(state.categories) { category ->
+            items(categories) { category ->
                 CategoryListItem(
                     onClick = {
-
+                        viewModel.getRandomJoke(it)
                     },
                     category = category
                 )
             }
         }
 
-        if (state.error != null) {
+        if (error.isNotBlank()) {
             Text(
-                text = state.error,
+                text = error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -50,8 +55,16 @@ fun CategoriesScreen(
             )
         }
 
-        if (state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        if (isLoading) {
+            Dialog(onDismissRequest = {}) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
+
+        if (dialogState.isShowing) {
+            CustomDialog(text = dialogState.joke, "OKAY", error = dialogState.errorMessage) {
+                viewModel.dismissDialog()
+            }
         }
     }
 }

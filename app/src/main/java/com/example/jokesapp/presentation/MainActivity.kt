@@ -7,7 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,11 +17,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.jokesapp.presentation.categories.CategoriesScreen
-import com.example.jokesapp.presentation.common.Screen
 import com.example.jokesapp.presentation.favorites.FavoritesScreen
 import com.example.jokesapp.presentation.home.HomeScreen
 import com.example.jokesapp.presentation.navigation.BottomNavBar
 import com.example.jokesapp.presentation.navigation.NavigationItem
+import com.example.jokesapp.presentation.search.SearchScreen
 import com.example.jokesapp.util.theme.JokesAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +40,12 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MainPage() {
-        val navigationItems = listOf(NavigationItem.Home, NavigationItem.Favorites)
+        val navigationItems = listOf(
+            NavigationItem.Home,
+            NavigationItem.Categories,
+            NavigationItem.Search,
+            NavigationItem.Favorites
+        )
         val navController = rememberNavController()
         val scaffoldState = rememberScaffoldState() // todo will be used for showing a snackbar.
 
@@ -62,23 +69,29 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun NavigationHost(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = Screen.Home.route) {
+        NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
             composable(
-                route = Screen.Home.route
+                route = NavigationItem.Home.route
             ) {
-                HomeScreen(navController)
+                HomeScreen()
             }
 
             composable(
-                route = Screen.CategoriesScreen.route
+                route = NavigationItem.Categories.route
             ) {
                 CategoriesScreen()
             }
 
             composable(
-                route = Screen.Favorites.route
+                route = NavigationItem.Favorites.route
             ) {
                 FavoritesScreen()
+            }
+
+            composable(
+                route = NavigationItem.Search.route
+            ) {
+                SearchScreen()
             }
 
 

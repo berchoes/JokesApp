@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.sp
  * Created by berchoes on 20.01.2022.
  */
 
-
 @Composable
 fun CategoryListItem(
     onClick: (String) -> Unit,
@@ -34,5 +33,6 @@ fun CategoryListItem(
         Text(text = category.uppercase(), fontSize = 20.sp)
 
     }
+
     Divider()
 }

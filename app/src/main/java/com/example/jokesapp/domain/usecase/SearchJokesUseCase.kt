@@ -13,7 +13,6 @@ class SearchJokesUseCase @Inject constructor(private val repository: JokesReposi
 
     operator fun invoke(query: String): Flow<Resource<List<Joke>>> = flow {
         try {
-            emit(Resource.Loading)
             val resultList: List<Joke> = repository.searchJokes(query).result.take(500).map { it.toJoke() }
             emit(Resource.Success<List<Joke>>(resultList))
         } catch (e: Exception) {
