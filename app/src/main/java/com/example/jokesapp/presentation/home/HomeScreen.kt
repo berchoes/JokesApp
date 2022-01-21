@@ -12,7 +12,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.jokesapp.R
 import com.example.jokesapp.presentation.common.CustomDialog
@@ -50,15 +49,17 @@ fun HomeScreen(
         }
 
         if (dialogState.isShowing) {
-            CustomDialog(text = dialogState.joke, dismissButtonText = "OKAY", error = dialogState.errorMessage) {
+            CustomDialog(
+                text = dialogState.joke,
+                dismissButtonText = "OKAY",
+                error = dialogState.errorMessage
+            ) {
                 viewModel.dismissDialog()
             }
         }
 
-        if(isLoading){
-            Dialog(onDismissRequest = {}) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 }

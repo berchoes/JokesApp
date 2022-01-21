@@ -21,7 +21,6 @@ fun CategoryListItem(
     onClick: (String) -> Unit,
     category: String
 ) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()

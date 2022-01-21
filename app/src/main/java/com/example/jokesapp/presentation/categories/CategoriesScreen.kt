@@ -11,9 +11,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.jokesapp.presentation.categories.components.CategoryListItem
 import com.example.jokesapp.presentation.common.CustomDialog
@@ -48,6 +48,7 @@ fun CategoriesScreen(
             Text(
                 text = error,
                 textAlign = TextAlign.Center,
+                color = Color.Red,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
@@ -56,9 +57,7 @@ fun CategoriesScreen(
         }
 
         if (isLoading) {
-            Dialog(onDismissRequest = {}) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
 
         if (dialogState.isShowing) {

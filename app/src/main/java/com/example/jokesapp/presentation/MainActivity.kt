@@ -93,8 +93,6 @@ class MainActivity : ComponentActivity() {
             ) {
                 SearchScreen()
             }
-
-
         }
     }
 }
