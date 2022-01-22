@@ -19,5 +19,4 @@ interface FavoritesDao {
 
     @Delete
     suspend fun deleteFavorite(joke: FavoriteJoke)
-
 }

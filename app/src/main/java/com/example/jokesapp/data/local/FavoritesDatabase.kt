@@ -12,5 +12,4 @@ import com.example.jokesapp.data.local.entity.FavoriteJoke
 abstract class FavoritesDatabase : RoomDatabase() {
 
     abstract fun getFavoritesDao(): FavoritesDao
-
 }

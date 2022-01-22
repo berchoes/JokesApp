@@ -1,5 +1,6 @@
 package com.example.jokesapp.presentation.search
 
+import com.example.jokesapp.data.local.entity.FavoriteJoke
 import com.example.jokesapp.domain.model.Joke
 
 /**
@@ -9,6 +10,7 @@ import com.example.jokesapp.domain.model.Joke
 data class SearchScreenState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
-    val jokes: List<Joke> = emptyList(),
-    val isEmptyResult: Boolean = false
+    val searchResults: List<Joke> = emptyList(),
+    val isEmptyResult: Boolean = false,
+    val favoriteJokes: List<FavoriteJoke> = emptyList()
 )

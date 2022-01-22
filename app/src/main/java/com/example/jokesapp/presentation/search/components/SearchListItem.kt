@@ -24,10 +24,11 @@ import com.example.jokesapp.domain.model.Joke
 @Composable
 fun SearchListItem(
     joke: Joke,
-    onFavoriteClicked: (Boolean, Joke) -> Unit
+    onFavoriteClicked: (Boolean, Joke) -> Unit,
+    isInFavorites: Boolean = false
 ) {
 
-    val isFavorite = remember { mutableStateOf(false) }
+    val isFavorite = remember { mutableStateOf(isInFavorites) }
 
     Row(
         Modifier
@@ -35,7 +36,7 @@ fun SearchListItem(
             .padding(12.dp), verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
-            modifier = Modifier, verticalAlignment = Alignment.Top
+            modifier = Modifier.weight(1f), verticalAlignment = Alignment.Top
         ) {
             Image(
                 painter = rememberImagePainter(joke.iconUrl),
@@ -47,6 +48,7 @@ fun SearchListItem(
         }
 
         IconButton(onClick = {
+            isFavorite.value = !isFavorite.value
             onFavoriteClicked(isFavorite.value,joke)
         }) {
             Icon(
@@ -55,7 +57,6 @@ fun SearchListItem(
                 tint = if (isFavorite.value) MaterialTheme.colors.primary else Color.Gray
             )
         }
-
     }
 
     Divider()

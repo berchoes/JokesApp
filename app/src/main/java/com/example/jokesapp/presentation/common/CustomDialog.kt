@@ -1,12 +1,15 @@
 package com.example.jokesapp.presentation.common
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.example.jokesapp.domain.model.Joke
 
 /**
@@ -34,6 +37,7 @@ fun CustomDialog(
                 }
             }) {
                 Icon(
+                    modifier = Modifier.padding(bottom = 14.dp),
                     imageVector = Icons.Default.Favorite,
                     contentDescription = "favIcon",
                     tint = if (isFavorite.value) MaterialTheme.colors.primary else Color.Gray

@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
+import com.example.jokesapp.domain.model.toFavoriteJoke
 import com.example.jokesapp.presentation.search.components.SearchBar
 import com.example.jokesapp.presentation.search.components.SearchListItem
 
@@ -39,10 +40,15 @@ fun SearchScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             LazyColumn {
-                items(state.jokes) {
-                    SearchListItem(joke = it, onLongPress = {
-                        viewModel.insertFavorite(it)
-                    })
+                items(state.searchResults) {
+                    SearchListItem(
+                        isInFavorites = state.favoriteJokes.contains(it.toFavoriteJoke()),
+                        joke = it,
+                        onFavoriteClicked = { isFav, joke ->
+                            if (isFav) viewModel.insertFavorite(joke) else viewModel.deleteFavorite(
+                                joke
+                            )
+                        })
                 }
             }
         }

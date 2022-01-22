@@ -43,5 +43,4 @@ object AppModule {
     @Singleton
     internal fun provideJokesRepository(service: JokesApi): JokesRepository =
         JokesRepositoryImpl(service)
-
 }

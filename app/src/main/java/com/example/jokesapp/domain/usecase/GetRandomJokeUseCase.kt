@@ -6,7 +6,6 @@ import com.example.jokesapp.domain.model.Joke
 import com.example.jokesapp.domain.repository.JokesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.lang.Exception
 import javax.inject.Inject
 
 class GetRandomJokeUseCase @Inject constructor(private val repository: JokesRepository) {
@@ -15,7 +14,7 @@ class GetRandomJokeUseCase @Inject constructor(private val repository: JokesRepo
         try {
             val joke: Joke = repository.getRandomJoke(category).toJoke()
             emit(Resource.Success<Joke>(joke))
-        }catch (e: Exception){
+        } catch (e: Exception) {
             emit(Resource.Error(e.localizedMessage ?: "An error occurred."))
         }
     }

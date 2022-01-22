@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ServicesModule {
 
-
     @Singleton
     @Provides
     internal fun provideJokesApi(retrofit: Retrofit): JokesApi =

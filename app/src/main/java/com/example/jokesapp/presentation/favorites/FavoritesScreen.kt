@@ -27,7 +27,7 @@ fun FavoritesScreen(
 ) {
     val favorites = viewModel.favorites.value
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().padding(12.dp)) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(favorites) {
                 FavoritesListItem(joke = it, onDeleteClicked = { favJoke ->
@@ -38,7 +38,7 @@ fun FavoritesScreen(
 
         if(favorites.isEmpty()){
             Text(
-                text = "You really think I'm not funny?",
+                text = "Do you really think that I'm not funny?",
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()

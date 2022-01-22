@@ -30,7 +30,6 @@ fun CategoryListItem(
     ) {
 
         Text(text = category.uppercase(), fontSize = 20.sp)
-
     }
 
     Divider()

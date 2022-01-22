@@ -13,5 +13,4 @@ class InsertFavoriteUseCase @Inject constructor(private val repository: Favorite
     suspend operator fun invoke(joke: Joke) {
         repository.insertFavorite(joke.toFavoriteJoke())
     }
-
 }

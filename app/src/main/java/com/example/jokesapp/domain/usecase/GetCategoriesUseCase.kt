@@ -8,11 +8,11 @@ import javax.inject.Inject
 
 class GetCategoriesUseCase @Inject constructor(private val repository: JokesRepository) {
 
-    operator fun invoke() :Flow<Resource<List<String>>> = flow {
+    operator fun invoke(): Flow<Resource<List<String>>> = flow {
         try {
             val categoriesList = repository.getCategories()
             emit(Resource.Success<List<String>>(categoriesList))
-        }catch (e: Exception){
+        } catch (e: Exception) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred."))
         }
     }
