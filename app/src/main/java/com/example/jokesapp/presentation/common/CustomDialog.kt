@@ -33,14 +33,14 @@ fun CustomDialog(
             IconButton(onClick = {
                 isFavorite.value = !isFavorite.value
                 joke?.let {
-                    onFavoriteClicked(isFavorite.value,it)
+                    onFavoriteClicked(isFavorite.value, it)
                 }
             }) {
                 Icon(
                     modifier = Modifier.padding(bottom = 14.dp),
                     imageVector = Icons.Default.Favorite,
                     contentDescription = "favIcon",
-                    tint = if (isFavorite.value) MaterialTheme.colors.primary else Color.Gray
+                    tint = if (isFavorite.value) MaterialTheme.colors.error else Color.Gray
                 )
             }
         },

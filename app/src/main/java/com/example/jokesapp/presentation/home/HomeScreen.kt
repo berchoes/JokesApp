@@ -2,9 +2,7 @@ package com.example.jokesapp.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +38,9 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Button(
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.primary
+                ) ,
                 onClick = {
                     viewModel.getRandomJoke()
                 }

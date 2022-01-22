@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,7 +55,7 @@ fun SearchListItem(
             Icon(
                 imageVector = Icons.Default.Favorite,
                 contentDescription = null,
-                tint = if (isFavorite.value) MaterialTheme.colors.primary else Color.Gray
+                tint = if (isFavorite.value) MaterialTheme.colors.error else Color.Gray
             )
         }
     }

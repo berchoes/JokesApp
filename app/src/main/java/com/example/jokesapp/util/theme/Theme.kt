@@ -8,7 +8,8 @@ private val ColorPalette = darkColors(
     primary = ColorPrimary,
     background = DarkGray,
     onBackground = TextWhite,
-    onPrimary = DarkGray
+    onPrimary = DarkGray,
+    error = Crimson
 )
 
 /* Other default colors to override
@@ -23,7 +24,6 @@ onSurface = Color.Black,
 @Composable
 fun JokesAppTheme(content: @Composable () -> Unit) {
     val colors = ColorPalette
-
 
     MaterialTheme(
         colors = colors,

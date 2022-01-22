@@ -46,7 +46,7 @@ fun BottomNavBar(
                 selected = isSelected,
                 label = { Text(text = item.title) },
                 alwaysShowLabel = true,
-                selectedContentColor = Color.Green,
+                selectedContentColor = MaterialTheme.colors.primary,
                 unselectedContentColor = Color.White,
                 onClick = { onItemClick(item) }
             )
