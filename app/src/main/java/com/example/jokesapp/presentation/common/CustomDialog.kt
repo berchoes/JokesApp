@@ -43,7 +43,6 @@ fun CustomDialog(
                     tint = if (isFavorite.value) MaterialTheme.colors.primary else Color.Gray
                 )
             }
-
         },
         confirmButton = {
             Button(onClick = onDismissed) {

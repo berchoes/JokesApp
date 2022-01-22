@@ -8,7 +8,6 @@ import com.example.jokesapp.data.local.entity.FavoriteJoke
 import com.example.jokesapp.domain.usecase.favorites.DeleteFavoriteUseCase
 import com.example.jokesapp.domain.usecase.favorites.GetAllFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -27,20 +26,14 @@ class FavoritesViewModel @Inject constructor(
     private val _favorites = mutableStateOf<List<FavoriteJoke>>(emptyList())
     val favorites: State<List<FavoriteJoke>> = _favorites
 
-    private var favoritesJob: Job? = null
-
-
     init {
         getFavorites()
     }
 
-
     private fun getFavorites() {
-        favoritesJob?.cancel()
-        favoritesJob = getAllFavoritesUseCase.invoke().onEach {
-           _favorites.value = it
+        getAllFavoritesUseCase.invoke().onEach {
+            _favorites.value = it
         }.launchIn(viewModelScope)
-
     }
 
     fun deleteFavorite(joke: FavoriteJoke) = viewModelScope.launch {

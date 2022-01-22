@@ -36,9 +36,6 @@ fun SearchScreen(
                 onTextChange = { viewModel.setSearchText(it) },
                 onSearchClicked = { viewModel.searchJokes(it) }
             )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
             LazyColumn {
                 items(state.searchResults) {
                     SearchListItem(

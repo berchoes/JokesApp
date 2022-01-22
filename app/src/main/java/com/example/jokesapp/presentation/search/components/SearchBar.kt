@@ -52,15 +52,11 @@ fun SearchBar(
                     )
                 }
             } else {
-                IconButton(
-                    onClick = {},
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "SearchIcon",
-                        tint = MaterialTheme.colors.primary
-                    )
-                }
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "SearchIcon",
+                    tint = MaterialTheme.colors.primary
+                )
             }
         },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),

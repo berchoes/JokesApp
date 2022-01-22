@@ -36,7 +36,7 @@ class SearchViewModel @Inject constructor(
     val state: State<SearchScreenState> = _state
 
     init {
-        searchJokes("Michael Jackson")
+        searchJokes("Chuck Norris")
     }
 
     fun setSearchText(text: String) {
@@ -48,13 +48,16 @@ class SearchViewModel @Inject constructor(
         val searchFlow = searchJokesUseCase.invoke(query)
         val favoritesFlow = getAllFavoritesUseCase.invoke()
 
-        favoritesFlow.zip(searchFlow){ favorites,searchResults ->
-            when(searchResults){
+        favoritesFlow.zip(searchFlow) { favorites, searchResults ->
+            when (searchResults) {
                 is Resource.Error -> {
                     _state.value = SearchScreenState(errorMessage = searchResults.message)
                 }
                 is Resource.Success -> {
-                    _state.value = SearchScreenState(favoriteJokes = favorites, searchResults = searchResults.data)
+                    _state.value = SearchScreenState(
+                        favoriteJokes = favorites,
+                        searchResults = searchResults.data
+                    )
                 }
             }
         }.launchIn(viewModelScope)

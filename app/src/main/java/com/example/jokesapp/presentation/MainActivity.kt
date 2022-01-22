@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -47,10 +46,8 @@ class MainActivity : ComponentActivity() {
             NavigationItem.Favorites
         )
         val navController = rememberNavController()
-        val scaffoldState = rememberScaffoldState() // todo will be used for showing a snackbar.
 
         Scaffold(
-            scaffoldState = scaffoldState,
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background),
