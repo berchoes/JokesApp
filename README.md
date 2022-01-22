@@ -12,7 +12,7 @@ Simple app that displays jokes about Chuck Norris.
 * Jetpack Compose Navigation
 * OkHttp & Retrofit
 * Coil for loading images from Url.
-* Kotlin Flows.
+* Kotlin Coroutines & Flows.
 
 ![Screen Shot 2022-01-22 at 16 58 47](https://user-images.githubusercontent.com/43885280/150657030-28b7539f-7866-4655-868f-32b023651577.png)
 ![Screen Shot 2022-01-22 at 16 59 46](https://user-images.githubusercontent.com/43885280/150657038-089076b1-a06c-460a-a9e6-4c6ae5faae46.png)
