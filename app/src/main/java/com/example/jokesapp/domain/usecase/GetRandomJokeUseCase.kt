@@ -1,7 +1,7 @@
 package com.example.jokesapp.domain.usecase
 
 import com.example.jokesapp.common.Resource
-import com.example.jokesapp.data.dto.toJoke
+import com.example.jokesapp.data.remote.dto.toJoke
 import com.example.jokesapp.domain.model.Joke
 import com.example.jokesapp.domain.repository.JokesRepository
 import kotlinx.coroutines.flow.Flow

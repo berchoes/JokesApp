@@ -1,7 +1,7 @@
-package com.example.jokesapp.data.service
+package com.example.jokesapp.data.remote
 
-import com.example.jokesapp.data.dto.JokeDto
-import com.example.jokesapp.data.dto.SearchResultDto
+import com.example.jokesapp.data.remote.dto.JokeDto
+import com.example.jokesapp.data.remote.dto.SearchResultDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

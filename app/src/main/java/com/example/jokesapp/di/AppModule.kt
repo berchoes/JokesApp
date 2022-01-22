@@ -2,7 +2,7 @@ package com.example.jokesapp.di
 
 import com.example.jokesapp.common.BASE_URL
 import com.example.jokesapp.data.repository.JokesRepositoryImpl
-import com.example.jokesapp.data.service.JokesApi
+import com.example.jokesapp.data.remote.JokesApi
 import com.example.jokesapp.domain.repository.JokesRepository
 import dagger.Module
 import dagger.Provides

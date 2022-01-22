@@ -1,4 +1,4 @@
-package com.example.jokesapp.data.dto
+package com.example.jokesapp.data.remote.dto
 
 import com.example.jokesapp.domain.model.Joke
 import com.google.gson.annotations.SerializedName

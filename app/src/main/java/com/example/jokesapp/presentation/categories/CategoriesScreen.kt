@@ -61,7 +61,17 @@ fun CategoriesScreen(
         }
 
         if (dialogState.isShowing) {
-            CustomDialog(text = dialogState.joke, "OKAY", error = dialogState.errorMessage) {
+            CustomDialog(
+                joke = dialogState.joke,
+                "OKAY",
+                error = dialogState.errorMessage,
+                onFavoriteClicked = { isFavorite, joke ->
+                    if (isFavorite) {
+                        viewModel.insertFavorite(joke)
+                    } else {
+                        viewModel.deleteFavorite(joke)
+                    }
+                }) {
                 viewModel.dismissDialog()
             }
         }

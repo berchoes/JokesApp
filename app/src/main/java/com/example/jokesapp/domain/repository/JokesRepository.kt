@@ -1,7 +1,7 @@
 package com.example.jokesapp.domain.repository
 
-import com.example.jokesapp.data.dto.JokeDto
-import com.example.jokesapp.data.dto.SearchResultDto
+import com.example.jokesapp.data.remote.dto.JokeDto
+import com.example.jokesapp.data.remote.dto.SearchResultDto
 
 interface JokesRepository {
 

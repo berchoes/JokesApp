@@ -54,7 +54,6 @@ fun SearchBar(
             } else {
                 IconButton(
                     onClick = {},
-                    modifier = Modifier.alpha(ContentAlpha.medium)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Search,

@@ -1,8 +1,8 @@
 package com.example.jokesapp.data.repository
 
-import com.example.jokesapp.data.dto.JokeDto
-import com.example.jokesapp.data.dto.SearchResultDto
-import com.example.jokesapp.data.service.JokesApi
+import com.example.jokesapp.data.remote.dto.JokeDto
+import com.example.jokesapp.data.remote.dto.SearchResultDto
+import com.example.jokesapp.data.remote.JokesApi
 import com.example.jokesapp.domain.repository.JokesRepository
 import javax.inject.Inject
 

@@ -50,9 +50,12 @@ fun HomeScreen(
 
         if (dialogState.isShowing) {
             CustomDialog(
-                text = dialogState.joke,
+                joke = dialogState.joke,
                 dismissButtonText = "OKAY",
-                error = dialogState.errorMessage
+                error = dialogState.errorMessage,
+                onFavoriteClicked = { isFav, joke ->
+                    if (isFav) viewModel.insertFavorite(joke) else viewModel.deleteFavorite(joke)
+                }
             ) {
                 viewModel.dismissDialog()
             }

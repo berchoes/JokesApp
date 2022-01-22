@@ -1,4 +1,4 @@
-package com.example.jokesapp.data.dto
+package com.example.jokesapp.data.remote.dto
 
 
 data class SearchResultDto(

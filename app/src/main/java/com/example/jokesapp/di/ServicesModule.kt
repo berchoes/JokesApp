@@ -1,6 +1,6 @@
 package com.example.jokesapp.di
 
-import com.example.jokesapp.data.service.JokesApi
+import com.example.jokesapp.data.remote.JokesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

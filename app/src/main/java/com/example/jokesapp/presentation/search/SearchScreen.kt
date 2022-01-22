@@ -40,7 +40,9 @@ fun SearchScreen(
 
             LazyColumn {
                 items(state.jokes) {
-                    SearchListItem(joke = it, onLongPress = { /* TODO add to favorites.*/ })
+                    SearchListItem(joke = it, onLongPress = {
+                        viewModel.insertFavorite(it)
+                    })
                 }
             }
         }
