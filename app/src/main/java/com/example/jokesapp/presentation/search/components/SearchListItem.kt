@@ -55,7 +55,7 @@ fun SearchListItem(
             Icon(
                 imageVector = Icons.Default.Favorite,
                 contentDescription = null,
-                tint = if (isFavorite.value) MaterialTheme.colors.error else Color.Gray
+                tint = if (isFavorite.value) MaterialTheme.colors.primary else Color.Gray
             )
         }
     }
