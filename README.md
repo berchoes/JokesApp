@@ -10,7 +10,7 @@ Api: https://api.chucknorris.io/
 * MVVM with Use-Cases
 * Dagger/Hilt for dependency injection
 * Jetpack Compose for faster UI implementation
-* Room Database for local data storage
+* Room Database for storing favorites jokes locally
 * Jetpack Compose Navigation
 * OkHttp & Retrofit
 * Coil for loading images from Url.
