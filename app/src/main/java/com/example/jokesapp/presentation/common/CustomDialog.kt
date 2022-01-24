@@ -30,18 +30,20 @@ fun CustomDialog(
     AlertDialog(
         onDismissRequest = {},
         dismissButton = {
-            IconButton(onClick = {
-                isFavorite.value = !isFavorite.value
-                joke?.let {
-                    onFavoriteClicked(isFavorite.value, it)
+            if (error == null) {
+                IconButton(onClick = {
+                    isFavorite.value = !isFavorite.value
+                    joke?.let {
+                        onFavoriteClicked(isFavorite.value, it)
+                    }
+                }) {
+                    Icon(
+                        modifier = Modifier.padding(bottom = 14.dp),
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = "favIcon",
+                        tint = if (isFavorite.value) MaterialTheme.colors.error else Color.Gray
+                    )
                 }
-            }) {
-                Icon(
-                    modifier = Modifier.padding(bottom = 14.dp),
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "favIcon",
-                    tint = if (isFavorite.value) MaterialTheme.colors.error else Color.Gray
-                )
             }
         },
         confirmButton = {

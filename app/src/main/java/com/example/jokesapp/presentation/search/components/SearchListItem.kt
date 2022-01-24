@@ -28,7 +28,6 @@ fun SearchListItem(
     onFavoriteClicked: (Boolean, Joke) -> Unit,
     isInFavorites: Boolean = false
 ) {
-
     val isFavorite = remember { mutableStateOf(isInFavorites) }
 
     Row(

@@ -19,6 +19,7 @@ import com.example.jokesapp.presentation.categories.CategoriesScreen
 import com.example.jokesapp.presentation.favorites.FavoritesScreen
 import com.example.jokesapp.presentation.home.HomeScreen
 import com.example.jokesapp.presentation.navigation.BottomNavBar
+import com.example.jokesapp.presentation.navigation.NavigationHost
 import com.example.jokesapp.presentation.navigation.NavigationItem
 import com.example.jokesapp.presentation.search.SearchScreen
 import com.example.jokesapp.util.theme.JokesAppTheme
@@ -60,35 +61,6 @@ class MainActivity : ComponentActivity() {
         ) {
             Box(modifier = Modifier.padding(it)) {
                 NavigationHost(navController = navController)
-            }
-        }
-    }
-
-    @Composable
-    fun NavigationHost(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
-            composable(
-                route = NavigationItem.Home.route
-            ) {
-                HomeScreen()
-            }
-
-            composable(
-                route = NavigationItem.Categories.route
-            ) {
-                CategoriesScreen()
-            }
-
-            composable(
-                route = NavigationItem.Favorites.route
-            ) {
-                FavoritesScreen()
-            }
-
-            composable(
-                route = NavigationItem.Search.route
-            ) {
-                SearchScreen()
             }
         }
     }

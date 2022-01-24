@@ -71,9 +71,10 @@ fun CategoriesScreen(
                     } else {
                         viewModel.deleteFavorite(joke)
                     }
-                }) {
-                viewModel.dismissDialog()
-            }
+                },
+                onDismissed = {
+                    viewModel.dismissDialog()
+                })
         }
     }
 }
