@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
             bottomBar = {
                 BottomNavBar(navigationItems, navController) {
                     navController.navigate(it.route){
-                        navController.popBackStack()
+                        popUpTo(0)
                     }
                 }
 
