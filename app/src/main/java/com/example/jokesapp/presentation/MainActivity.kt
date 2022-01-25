@@ -54,7 +54,9 @@ class MainActivity : ComponentActivity() {
                 .background(MaterialTheme.colors.background),
             bottomBar = {
                 BottomNavBar(navigationItems, navController) {
-                    navController.navigate(it.route)
+                    navController.navigate(it.route){
+                        navController.popBackStack()
+                    }
                 }
 
             }
