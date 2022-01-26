@@ -33,7 +33,6 @@ class SearchViewModel @Inject constructor(
     var searchQuery by mutableStateOf("")
         private set
 
-
     var state by mutableStateOf(SearchScreenState())
         private set
 
@@ -51,16 +50,12 @@ class SearchViewModel @Inject constructor(
         val favoritesFlow = getAllFavoritesUseCase.invoke()
 
         favoritesFlow.zip(searchFlow) { favorites, searchResults ->
-            when (searchResults) {
-                is Resource.Error -> {
-                    state = SearchScreenState(errorMessage = searchResults.message)
-                }
-                is Resource.Success -> {
-                    state = SearchScreenState(
-                        favoriteJokes = favorites,
-                        searchResults = searchResults.data
-                    )
-                }
+            state = when (searchResults) {
+                is Resource.Error -> SearchScreenState(errorMessage = searchResults.message)
+                is Resource.Success -> SearchScreenState(
+                    favoriteJokes = favorites,
+                    searchResults = searchResults.data
+                )
             }
         }.launchIn(viewModelScope)
     }

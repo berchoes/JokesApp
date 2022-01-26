@@ -9,6 +9,7 @@ import javax.inject.Inject
  */
 
 class DeleteFavoriteUseCase @Inject constructor(private val repository: FavoritesRepository) {
+
     suspend operator fun invoke(joke: FavoriteJoke) {
         repository.deleteFavorite(joke)
     }
