@@ -1,7 +1,8 @@
 package com.example.jokesapp.presentation.search
 
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jokesapp.common.Resource
@@ -29,32 +30,33 @@ class SearchViewModel @Inject constructor(
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : ViewModel() {
 
-    private val _searchText = mutableStateOf("")
-    val searchText: State<String> = _searchText
+    var searchQuery by mutableStateOf("")
+        private set
 
-    private val _state = mutableStateOf(SearchScreenState())
-    val state: State<SearchScreenState> = _state
+
+    var state by mutableStateOf(SearchScreenState())
+        private set
 
     init {
         searchJokes("Chuck Norris")
     }
 
     fun setSearchText(text: String) {
-        _searchText.value = text
+        searchQuery = text
     }
 
     fun searchJokes(query: String) {
-        _state.value = SearchScreenState(isLoading = true)
+        state = SearchScreenState(isLoading = true)
         val searchFlow = searchJokesUseCase.invoke(query)
         val favoritesFlow = getAllFavoritesUseCase.invoke()
 
         favoritesFlow.zip(searchFlow) { favorites, searchResults ->
             when (searchResults) {
                 is Resource.Error -> {
-                    _state.value = SearchScreenState(errorMessage = searchResults.message)
+                    state = SearchScreenState(errorMessage = searchResults.message)
                 }
                 is Resource.Success -> {
-                    _state.value = SearchScreenState(
+                    state = SearchScreenState(
                         favoriteJokes = favorites,
                         searchResults = searchResults.data
                     )

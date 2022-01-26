@@ -1,7 +1,8 @@
 package com.example.jokesapp.presentation.favorites
 
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jokesapp.data.local.entity.FavoriteJoke
@@ -23,8 +24,8 @@ class FavoritesViewModel @Inject constructor(
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : ViewModel() {
 
-    private val _favorites = mutableStateOf<List<FavoriteJoke>>(emptyList())
-    val favorites: State<List<FavoriteJoke>> = _favorites
+    var favorites by mutableStateOf<List<FavoriteJoke>>(emptyList())
+        private set
 
     init {
         getFavorites()
@@ -32,7 +33,7 @@ class FavoritesViewModel @Inject constructor(
 
     private fun getFavorites() {
         getAllFavoritesUseCase.invoke().onEach {
-            _favorites.value = it
+            favorites = it
         }.launchIn(viewModelScope)
     }
 

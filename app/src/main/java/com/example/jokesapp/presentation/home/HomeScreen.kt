@@ -23,8 +23,7 @@ import com.example.jokesapp.presentation.common.CustomDialog
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val dialogState = viewModel.dialogState.value
-    val isLoading = viewModel.isLoading.value
+    val dialogState = viewModel.dialogState
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -62,7 +61,7 @@ fun HomeScreen(
             }
         }
 
-        if (isLoading) {
+        if (dialogState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }

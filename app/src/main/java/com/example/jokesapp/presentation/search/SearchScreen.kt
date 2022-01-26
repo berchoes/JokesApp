@@ -26,12 +26,12 @@ import com.example.jokesapp.presentation.search.components.SearchListItem
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val state = viewModel.state
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             SearchBar(
-                text = viewModel.searchText.value,
+                text = viewModel.searchQuery,
                 onCloseClicked = { viewModel.setSearchText("") },
                 onTextChange = { viewModel.setSearchText(it) },
                 onSearchClicked = { viewModel.searchJokes(it) }

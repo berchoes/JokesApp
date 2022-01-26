@@ -25,7 +25,7 @@ import com.example.jokesapp.presentation.favorites.components.FavoritesListItem
 fun FavoritesScreen(
     viewModel: FavoritesViewModel = hiltViewModel()
 ) {
-    val favorites = viewModel.favorites.value
+    val favorites = viewModel.favorites
 
     Box(modifier = Modifier.fillMaxSize().padding(12.dp)) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {

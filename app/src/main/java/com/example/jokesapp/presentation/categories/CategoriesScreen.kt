@@ -27,14 +27,12 @@ import com.example.jokesapp.presentation.common.CustomDialog
 fun CategoriesScreen(
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
-    val categories = viewModel.categories.value
-    val isLoading = viewModel.isLoading.value
-    val error = viewModel.error.value
-    val dialogState = viewModel.dialogState.value
+    val screenState = viewModel.screenState
+    val dialogState = viewModel.dialogState
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(categories) { category ->
+            items(screenState.categories) { category ->
                 CategoryListItem(
                     onClick = {
                         viewModel.getRandomJoke(it)
@@ -44,9 +42,9 @@ fun CategoriesScreen(
             }
         }
 
-        if (error.isNotBlank()) {
+        if (screenState.error.isNotBlank()) {
             Text(
-                text = error,
+                text = screenState.error,
                 textAlign = TextAlign.Center,
                 color = Color.Red,
                 modifier = Modifier
@@ -56,7 +54,7 @@ fun CategoriesScreen(
             )
         }
 
-        if (isLoading) {
+        if (screenState.isLoading || dialogState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
 

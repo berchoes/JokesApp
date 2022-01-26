@@ -58,7 +58,6 @@ class MainActivity : ComponentActivity() {
                         popUpTo(0)
                     }
                 }
-
             }
         ) {
             Box(modifier = Modifier.padding(it)) {

@@ -1,7 +1,8 @@
 package com.example.jokesapp.presentation.categories
 
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jokesapp.common.Resource
@@ -30,17 +31,11 @@ class CategoriesViewModel @Inject constructor(
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : ViewModel() {
 
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    var screenState by mutableStateOf(CategoriesState())
+        private set
 
-    private val _error = mutableStateOf("")
-    val error: State<String> = _error
-
-    private val _categories = mutableStateOf<List<String>>(emptyList())
-    val categories: State<List<String>> = _categories
-
-    private val _dialogState = mutableStateOf(DialogState())
-    val dialogState: State<DialogState> = _dialogState
+    var dialogState by mutableStateOf(DialogState())
+        private set
 
 
     init {
@@ -49,31 +44,23 @@ class CategoriesViewModel @Inject constructor(
 
 
     private fun getCategories() {
-        _isLoading.value = true
+        screenState = CategoriesState(isLoading = true)
         getCategoriesUseCase.invoke().onEach {
-            when (it) {
-                is Resource.Error -> {
-                    _error.value = it.message
-                }
-                is Resource.Success -> {
-                    _categories.value = it.data
-                }
+            screenState = when (it) {
+                is Resource.Error -> CategoriesState(error = it.message)
+                is Resource.Success -> CategoriesState(categories = it.data)
             }
-            _isLoading.value = false
         }.launchIn(viewModelScope)
     }
 
 
     fun getRandomJoke(category: String) {
-        _isLoading.value = true
+        dialogState = DialogState(isLoading = true)
         getRandomJokeUseCase.invoke(category).onEach {
-            when (it) {
-                is Resource.Error -> _dialogState.value =
-                    DialogState(errorMessage = it.message, isShowing = true)
-                is Resource.Success -> _dialogState.value =
-                    DialogState(joke = it.data, isShowing = true)
+            dialogState = when (it) {
+                is Resource.Error -> DialogState(errorMessage = it.message, isShowing = true)
+                is Resource.Success -> DialogState(joke = it.data, isShowing = true)
             }
-            _isLoading.value = false
         }.launchIn(viewModelScope)
     }
 
@@ -86,6 +73,6 @@ class CategoriesViewModel @Inject constructor(
     }
 
     fun dismissDialog() {
-        _dialogState.value = DialogState(isShowing = false)
+        dialogState = DialogState(isShowing = false)
     }
 }

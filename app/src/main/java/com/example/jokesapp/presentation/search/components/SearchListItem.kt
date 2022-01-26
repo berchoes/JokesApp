@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +26,7 @@ fun SearchListItem(
     onFavoriteClicked: (Boolean, Joke) -> Unit,
     isInFavorites: Boolean = false
 ) {
-    val isFavorite = remember { mutableStateOf(isInFavorites) }
+    var isFavorite by rememberSaveable { mutableStateOf(isInFavorites) }
 
     Row(
         Modifier
@@ -48,16 +46,17 @@ fun SearchListItem(
         }
 
         IconButton(onClick = {
-            isFavorite.value = !isFavorite.value
-            onFavoriteClicked(isFavorite.value,joke)
+            isFavorite = !isFavorite
+            onFavoriteClicked(isFavorite, joke)
         }) {
             Icon(
                 imageVector = Icons.Default.Favorite,
                 contentDescription = null,
-                tint = if (isFavorite.value) MaterialTheme.colors.primary else Color.Gray
+                tint = if (isFavorite) MaterialTheme.colors.primary else Color.Gray
             )
         }
     }
 
     Divider()
+
 }
