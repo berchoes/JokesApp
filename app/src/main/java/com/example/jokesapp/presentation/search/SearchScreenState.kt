@@ -12,5 +12,5 @@ data class SearchScreenState(
     val errorMessage: String? = null,
     val searchResults: List<Joke> = emptyList(),
     val isEmptyResult: Boolean = false,
-    val favoriteJokes: List<FavoriteJoke> = emptyList()
+    val favoriteJokes: List<FavoriteJoke> = emptyList(),
 )

@@ -32,7 +32,6 @@ class HomeViewModel @Inject constructor(
     var dialogState by mutableStateOf(DialogState())
         private set
 
-
     fun getRandomJoke() {
         dialogState = DialogState(isLoading = true)
         getRandomJokeUseCase.invoke().onEach {
@@ -42,7 +41,6 @@ class HomeViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
 
     fun dismissDialog() {
         dialogState = DialogState(isShowing = false)

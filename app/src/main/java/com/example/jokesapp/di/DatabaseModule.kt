@@ -27,7 +27,6 @@ object DatabaseModule {
     internal fun provideFavoritesDatabase(@ApplicationContext context: Context): FavoritesDatabase =
         Room.databaseBuilder(context, FavoritesDatabase::class.java, DATABASE_NAME).build()
 
-
     @Singleton
     @Provides
     internal fun provideFavoritesDao(database: FavoritesDatabase): FavoritesDao =

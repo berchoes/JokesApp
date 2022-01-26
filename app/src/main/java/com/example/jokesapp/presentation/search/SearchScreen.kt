@@ -30,12 +30,14 @@ fun SearchScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
+
             SearchBar(
                 text = viewModel.searchQuery,
                 onCloseClicked = { viewModel.setSearchText("") },
                 onTextChange = { viewModel.setSearchText(it) },
                 onSearchClicked = { viewModel.searchJokes(it) }
             )
+
             LazyColumn {
                 items(state.searchResults) {
                     SearchListItem(

@@ -37,11 +37,9 @@ class CategoriesViewModel @Inject constructor(
     var dialogState by mutableStateOf(DialogState())
         private set
 
-
     init {
         getCategories()
     }
-
 
     private fun getCategories() {
         screenState = CategoriesState(isLoading = true)
@@ -52,7 +50,6 @@ class CategoriesViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
 
     fun getRandomJoke(category: String) {
         dialogState = DialogState(isLoading = true)
