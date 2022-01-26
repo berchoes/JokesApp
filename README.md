@@ -11,7 +11,6 @@ Api: https://api.chucknorris.io/
 * Dagger/Hilt for dependency injection
 * Jetpack Compose
 * Room Database for storing favorite jokes locally
-* Jetpack Compose Navigation
 * OkHttp & Retrofit
 * Coil for loading images from Url.
 * Kotlin Coroutines & Flows.
