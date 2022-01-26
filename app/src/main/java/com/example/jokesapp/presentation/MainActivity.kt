@@ -11,18 +11,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.jokesapp.presentation.categories.CategoriesScreen
-import com.example.jokesapp.presentation.favorites.FavoritesScreen
-import com.example.jokesapp.presentation.home.HomeScreen
 import com.example.jokesapp.presentation.navigation.BottomNavBar
 import com.example.jokesapp.presentation.navigation.NavigationHost
 import com.example.jokesapp.presentation.navigation.NavigationItem
-import com.example.jokesapp.presentation.search.SearchScreen
-import com.example.jokesapp.util.theme.JokesAppTheme
+import com.example.jokesapp.theme.JokesAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 

@@ -8,7 +8,6 @@ import javax.inject.Inject
 /**
  * Created by berchoes on 21.01.2022.
  */
-
 class GetAllFavoritesUseCase @Inject constructor(private val repository: FavoritesRepository) {
 
     operator fun invoke(): Flow<List<FavoriteJoke>> = repository.getAllFavoriteJokes()
