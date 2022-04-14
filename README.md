@@ -1,6 +1,6 @@
 # JokesApp
 
-Simple app that displays jokes about Chuck Norris. Following the best practices.
+Simple app that displays jokes about Chuck Norris.
 
 Api: https://api.chucknorris.io/
 
