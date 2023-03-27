@@ -69,4 +69,5 @@ fun SearchBar(
             disabledIndicatorColor = Color.Transparent
         )
     )
+    Divider()
 }

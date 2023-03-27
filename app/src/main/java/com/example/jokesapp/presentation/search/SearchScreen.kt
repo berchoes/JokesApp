@@ -46,7 +46,7 @@ fun SearchScreen(
             )
 
             if(state.searchResults.isNotEmpty()){
-                LazyColumn {
+                LazyColumn(modifier = Modifier.padding(12.dp,0.dp)) {
                     items(state.searchResults, key = { it.id }) {
                         SearchListItem(
                             isInFavorites = viewModel.isInFavorites(it),

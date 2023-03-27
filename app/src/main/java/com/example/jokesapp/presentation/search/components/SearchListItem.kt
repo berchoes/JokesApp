@@ -31,16 +31,11 @@ fun SearchListItem(
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(12.dp), verticalAlignment = Alignment.CenterVertically
+            .padding(12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start
     ) {
         Row(
             modifier = Modifier.weight(1f), verticalAlignment = Alignment.Top
         ) {
-            Image(
-                painter = rememberImagePainter(joke.iconUrl),
-                contentDescription = null,
-                modifier = Modifier.size(60.dp)
-            )
             Spacer(modifier = Modifier.width(8.dp))
             Text(joke.content, style = MaterialTheme.typography.body2)
         }
@@ -56,7 +51,5 @@ fun SearchListItem(
             )
         }
     }
-
     Divider()
-
 }

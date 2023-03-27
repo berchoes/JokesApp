@@ -34,17 +34,11 @@ fun FavoritesListItem(
                 .padding(12.dp)
                 .weight(1f),
             verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.Start
         ) {
-            Image(
-                painter = rememberImagePainter(joke.icon),
-                contentDescription = null,
-                modifier = Modifier.size(60.dp)
-            )
             Spacer(modifier = Modifier.width(8.dp))
             Text(joke.content, style = MaterialTheme.typography.body2)
         }
-
         Image(
             painter = painterResource(id = R.drawable.ic_delete),
             contentDescription = "deleteIcon",
