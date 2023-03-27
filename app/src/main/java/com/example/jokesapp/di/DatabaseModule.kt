@@ -31,9 +31,4 @@ object DatabaseModule {
     @Provides
     internal fun provideFavoritesDao(database: FavoritesDatabase): FavoritesDao =
         database.getFavoritesDao()
-
-    @Singleton
-    @Provides
-    internal fun provideFavoritesRepository(dao: FavoritesDao): FavoritesRepository =
-        FavoritesRepositoryImpl(dao)
 }

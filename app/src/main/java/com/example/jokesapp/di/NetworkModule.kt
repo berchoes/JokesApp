@@ -1,9 +1,7 @@
 package com.example.jokesapp.di
 
 import com.example.jokesapp.common.BASE_URL
-import com.example.jokesapp.data.repository.JokesRepositoryImpl
 import com.example.jokesapp.data.remote.JokesApi
-import com.example.jokesapp.domain.repository.JokesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,8 +36,8 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    @Provides
     @Singleton
-    internal fun provideJokesRepository(service: JokesApi): JokesRepository =
-        JokesRepositoryImpl(service)
+    @Provides
+    internal fun provideJokesApi(retrofit: Retrofit): JokesApi =
+        retrofit.create(JokesApi::class.java)
 }

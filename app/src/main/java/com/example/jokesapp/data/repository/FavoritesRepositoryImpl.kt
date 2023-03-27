@@ -2,8 +2,10 @@ package com.example.jokesapp.data.repository
 
 import com.example.jokesapp.data.local.FavoritesDao
 import com.example.jokesapp.data.local.entity.FavoriteJoke
+import com.example.jokesapp.domain.model.Joke
 import com.example.jokesapp.domain.repository.FavoritesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**

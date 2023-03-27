@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,12 +28,11 @@ import com.example.jokesapp.presentation.common.CustomDialog
 fun CategoriesScreen(
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
-    val screenState = viewModel.screenState
-    val dialogState = viewModel.dialogState
+    val screenState = viewModel.screenState.collectAsState().value
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(screenState.categories) { category ->
+            items(screenState.categories, key = {it}) { category ->
                 CategoryListItem(
                     onClick = {
                         viewModel.getRandomJoke(it)
@@ -54,15 +54,16 @@ fun CategoriesScreen(
             )
         }
 
-        if (screenState.isLoading || dialogState.isLoading) {
+        if (screenState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
 
-        if (dialogState.isShowing) {
+        if (screenState.dialog.isShowing) {
+            val dialog = screenState.dialog
             CustomDialog(
-                joke = dialogState.joke,
+                joke = dialog.joke,
                 "OKAY",
-                error = dialogState.errorMessage,
+                error = dialog.errorMessage,
                 onFavoriteClicked = { isFavorite, joke ->
                     if (isFavorite) {
                         viewModel.insertFavorite(joke)

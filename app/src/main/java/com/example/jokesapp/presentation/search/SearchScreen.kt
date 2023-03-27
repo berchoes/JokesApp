@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,28 +27,36 @@ import com.example.jokesapp.presentation.search.components.SearchListItem
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state
+    val state = viewModel.pageState.collectAsState().value
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-
             SearchBar(
                 text = viewModel.searchQuery,
-                onCloseClicked = { viewModel.setSearchText("") },
+                onCloseClicked = {
+                    viewModel.run {
+                        setSearchText("")
+                        searchJokes("Chuck Norris")
+                    }
+                },
                 onTextChange = { viewModel.setSearchText(it) },
-                onSearchClicked = { viewModel.searchJokes(it) }
+                onSearchClicked = {
+                    if (it.isNotBlank()) viewModel.searchJokes(it) else viewModel.searchJokes("Chuck Norris")
+                }
             )
 
-            LazyColumn {
-                items(state.searchResults) {
-                    SearchListItem(
-                        isInFavorites = state.favoriteJokes.contains(it.toFavoriteJoke()),
-                        joke = it,
-                        onFavoriteClicked = { isFav, joke ->
-                            if (isFav) viewModel.insertFavorite(joke) else viewModel.deleteFavorite(
-                                joke
-                            )
-                        })
+            if(state.searchResults.isNotEmpty()){
+                LazyColumn {
+                    items(state.searchResults, key = { it.id }) {
+                        SearchListItem(
+                            isInFavorites = viewModel.isInFavorites(it),
+                            joke = it,
+                            onFavoriteClicked = { isFav, joke ->
+                                if (isFav) viewModel.insertFavorite(joke) else viewModel.deleteFavorite(
+                                    joke
+                                )
+                            })
+                    }
                 }
             }
         }

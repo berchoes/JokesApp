@@ -1,8 +1,5 @@
 package com.example.jokesapp.presentation.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jokesapp.common.Resource
@@ -13,8 +10,7 @@ import com.example.jokesapp.domain.usecase.favorites.DeleteFavoriteUseCase
 import com.example.jokesapp.domain.usecase.favorites.InsertFavoriteUseCase
 import com.example.jokesapp.presentation.common.DialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,29 +25,40 @@ class HomeViewModel @Inject constructor(
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : ViewModel() {
 
-    var dialogState by mutableStateOf(DialogState())
-        private set
+    private val _dialogState =  MutableStateFlow(DialogState())
+    val dialogState = _dialogState.asStateFlow()
 
     fun getRandomJoke() {
-        dialogState = DialogState(isLoading = true)
         getRandomJokeUseCase.invoke().onEach {
-            dialogState = when (it) {
-                is Resource.Error -> DialogState(errorMessage = it.message, isShowing = true)
-                is Resource.Success -> DialogState(joke = it.data, isShowing = true)
+            _dialogState.update { state ->
+                when (it) {
+                    is Resource.Error -> DialogState(
+                        errorMessage = it.message,
+                        isShowing = true,
+                        isLoading = false
+                    )
+                    is Resource.Success -> DialogState(
+                        joke = it.data,
+                        isShowing = true,
+                        isLoading = false
+                    )
+                    is Resource.Loading -> state.copy(isLoading = true)
+                }
             }
         }.launchIn(viewModelScope)
     }
 
     fun dismissDialog() {
-        dialogState = DialogState(isShowing = false)
+        _dialogState.update {
+            it.copy(isShowing = false)
+        }
     }
-
 
     fun deleteFavorite(joke: Joke) = viewModelScope.launch {
         deleteFavoriteUseCase.invoke(joke.toFavoriteJoke())
     }
 
     fun insertFavorite(joke: Joke) = viewModelScope.launch {
-        insertFavoriteUseCase.invoke(joke)
+        insertFavoriteUseCase.invoke(joke.toFavoriteJoke())
     }
 }

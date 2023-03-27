@@ -10,6 +10,7 @@ class GetCategoriesUseCase @Inject constructor(private val repository: JokesRepo
 
     operator fun invoke(): Flow<Resource<List<String>>> = flow {
         try {
+            emit(Resource.Loading)
             val categoriesList = repository.getCategories()
             emit(Resource.Success<List<String>>(categoriesList))
         } catch (e: Exception) {

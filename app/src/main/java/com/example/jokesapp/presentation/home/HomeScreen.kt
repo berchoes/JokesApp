@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -23,7 +24,7 @@ import com.example.jokesapp.presentation.common.CustomDialog
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val dialogState = viewModel.dialogState
+    val dialogState = viewModel.dialogState.collectAsState().value
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(

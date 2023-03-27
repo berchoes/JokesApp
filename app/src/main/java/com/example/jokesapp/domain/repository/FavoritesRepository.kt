@@ -1,6 +1,7 @@
 package com.example.jokesapp.domain.repository
 
 import com.example.jokesapp.data.local.entity.FavoriteJoke
+import com.example.jokesapp.domain.model.Joke
 import kotlinx.coroutines.flow.Flow
 
 /**

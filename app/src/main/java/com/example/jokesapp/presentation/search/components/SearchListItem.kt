@@ -26,7 +26,7 @@ fun SearchListItem(
     onFavoriteClicked: (Boolean, Joke) -> Unit,
     isInFavorites: Boolean = false
 ) {
-    var isFavorite by rememberSaveable { mutableStateOf(isInFavorites) }
+    var isFavorite by remember { mutableStateOf(isInFavorites) }
 
     Row(
         Modifier

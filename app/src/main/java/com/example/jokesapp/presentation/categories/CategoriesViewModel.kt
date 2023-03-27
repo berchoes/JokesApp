@@ -1,8 +1,5 @@
 package com.example.jokesapp.presentation.categories
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jokesapp.common.Resource
@@ -14,8 +11,7 @@ import com.example.jokesapp.domain.usecase.favorites.DeleteFavoriteUseCase
 import com.example.jokesapp.domain.usecase.favorites.InsertFavoriteUseCase
 import com.example.jokesapp.presentation.common.DialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,38 +27,51 @@ class CategoriesViewModel @Inject constructor(
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase
 ) : ViewModel() {
 
-    var screenState by mutableStateOf(CategoriesState())
-        private set
-
-    var dialogState by mutableStateOf(DialogState())
-        private set
+    private val _screenState = MutableStateFlow(CategoriesState())
+    val screenState = _screenState.asStateFlow()
 
     init {
         getCategories()
     }
 
     private fun getCategories() {
-        screenState = CategoriesState(isLoading = true)
-        getCategoriesUseCase.invoke().onEach {
-            screenState = when (it) {
-                is Resource.Error -> CategoriesState(error = it.message)
-                is Resource.Success -> CategoriesState(categories = it.data)
+        getCategoriesUseCase.invoke().onEach { response ->
+            _screenState.update {
+                when (response) {
+                    is Resource.Error -> it.copy(error = response.message, isLoading = false)
+                    is Resource.Success -> it.copy(categories = response.data, isLoading = false)
+                    is Resource.Loading -> _screenState.value.copy(isLoading = true)
+                }
             }
         }.launchIn(viewModelScope)
     }
 
     fun getRandomJoke(category: String) {
-        dialogState = DialogState(isLoading = true)
         getRandomJokeUseCase.invoke(category).onEach {
-            dialogState = when (it) {
-                is Resource.Error -> DialogState(errorMessage = it.message, isShowing = true)
-                is Resource.Success -> DialogState(joke = it.data, isShowing = true)
+            _screenState.update { state ->
+                when (it) {
+                    is Resource.Error -> state.copy(
+                        isLoading = false,
+                        dialog = DialogState(
+                            errorMessage = it.message,
+                            isShowing = true,
+                        )
+                    )
+                    is Resource.Success -> state.copy(
+                        isLoading = false,
+                        dialog = DialogState(
+                            joke = it.data,
+                            isShowing = true,
+                        )
+                    )
+                    is Resource.Loading -> state.copy(isLoading = true)
+                }
             }
         }.launchIn(viewModelScope)
     }
 
     fun insertFavorite(joke: Joke) = viewModelScope.launch {
-        insertFavoriteUseCase.invoke(joke)
+        insertFavoriteUseCase.invoke(joke.toFavoriteJoke())
     }
 
     fun deleteFavorite(joke: Joke) = viewModelScope.launch {
@@ -70,6 +79,8 @@ class CategoriesViewModel @Inject constructor(
     }
 
     fun dismissDialog() {
-        dialogState = DialogState(isShowing = false)
+        _screenState.update {
+            it.copy(dialog = DialogState(isShowing = false))
+        }
     }
 }

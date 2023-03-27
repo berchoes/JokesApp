@@ -13,8 +13,7 @@ import com.example.jokesapp.domain.usecase.favorites.DeleteFavoriteUseCase
 import com.example.jokesapp.domain.usecase.favorites.GetAllFavoritesUseCase
 import com.example.jokesapp.domain.usecase.favorites.InsertFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,8 +32,8 @@ class SearchViewModel @Inject constructor(
     var searchQuery by mutableStateOf("")
         private set
 
-    var state by mutableStateOf(SearchScreenState())
-        private set
+    private val _pageState = MutableStateFlow(SearchScreenState())
+    val pageState = _pageState.asStateFlow()
 
     init {
         searchJokes("Chuck Norris")
@@ -45,23 +44,38 @@ class SearchViewModel @Inject constructor(
     }
 
     fun searchJokes(query: String) {
-        state = SearchScreenState(isLoading = true)
         val searchFlow = searchJokesUseCase.invoke(query)
         val favoritesFlow = getAllFavoritesUseCase.invoke()
 
-        favoritesFlow.zip(searchFlow) { favorites, searchResults ->
-            state = when (searchResults) {
-                is Resource.Error -> SearchScreenState(errorMessage = searchResults.message)
-                is Resource.Success -> SearchScreenState(
-                    favoriteJokes = favorites,
-                    searchResults = searchResults.data
-                )
+        searchFlow.combine(favoritesFlow) { searchResults, favorites ->
+            _pageState.update {
+                when (searchResults) {
+                    is Resource.Error -> it.copy(
+                        errorMessage = searchResults.message,
+                        isLoading = false
+                    )
+                    is Resource.Success -> it.copy(
+                        errorMessage = null,
+                        favoriteJokes = favorites,
+                        searchResults = searchResults.data,
+                        isLoading = false
+                    )
+                    is Resource.Loading -> {
+                        it.copy(isLoading = true)
+                    }
+                }
             }
         }.launchIn(viewModelScope)
     }
 
+    fun isInFavorites(joke: Joke): Boolean {
+        return _pageState.value.favoriteJokes.any {
+            joke.toFavoriteJoke() == it
+        }
+    }
+
     fun insertFavorite(joke: Joke) = viewModelScope.launch {
-        insertFavoriteUseCase.invoke(joke)
+        insertFavoriteUseCase.invoke(joke.toFavoriteJoke())
     }
 
     fun deleteFavorite(joke: Joke) = viewModelScope.launch {
